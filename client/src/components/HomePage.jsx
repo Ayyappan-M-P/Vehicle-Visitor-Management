@@ -38,27 +38,49 @@ const HomePage = () => {
                   <th className="py-3 px-6 text-left">Vehicle Type</th>
                   <th className="py-3 px-6 text-left">Date</th>
                   <th className="py-3 px-6 text-left">Status</th>
+                  <th className='py-3 px-6 text-left'>In Time</th>
+                  <th className='py-3 px-6 text-left'>Out Time</th> 
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
-                {visitors.map((visitor) => (
-                  <tr key={visitor.id} className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6">{visitor.visitorNumber}</td>
-                    <td className="py-3 px-6">{visitor.username}</td>
-                    <td className="py-3 px-6">{visitor.vehicleType}</td>
-                    <td className="py-3 px-6">{new Date(visitor.dateOfVisit).toLocaleDateString()}</td>
-                    <td className="py-3 px-6">
-                      <span className={`py-1 px-3 rounded-full text-xs ${
-                        visitor.status === 'Complete' ? 'bg-green-200 text-green-700' : 
-                        visitor.status === 'Approved' ? 'bg-blue-200 text-blue-700' :
-                        visitor.status === 'Rejected' ? 'bg-red-200 text-red-700' : 
-                        'bg-yellow-200 text-yellow-700'
-                      }`}>
-                        {visitor.status || 'Pending'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                {visitors.map((visitor) => {
+                  let formattedTime = '';
+                  let formattedOutTime = '';
+                  if (visitor.inTime) {
+                    const [hour, minute] = visitor.inTime.split(':').map(Number);
+                    const inDate = new Date();
+                    inDate.setHours(hour, minute, 0, 0);
+                    formattedTime = inDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                    if (visitor.duration) {
+                      const outDate = new Date(inDate.getTime() + Number(visitor.duration) * 60000);
+                      formattedOutTime = outDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                    }
+                  }
+                  return (
+                    <tr key={visitor.id} className="border-b border-gray-200 hover:bg-gray-100">
+                      <td className="py-3 px-6">{visitor.visitorNumber}</td>
+                      <td className="py-3 px-6">{visitor.username}</td>
+                      <td className="py-3 px-6">{visitor.vehicleType}</td>
+                      <td className="py-3 px-6">{new Date(visitor.dateOfVisit).toLocaleDateString()}</td>
+                      <td className="py-3 px-6">
+                        <span className={`py-1 px-3 rounded-full text-xs ${
+                          visitor.status === 'Complete' ? 'bg-green-200 text-green-700' : 
+                          visitor.status === 'Approved' ? 'bg-blue-200 text-blue-700' :
+                          visitor.status === 'Rejected' ? 'bg-red-200 text-red-700' : 
+                          'bg-yellow-200 text-yellow-700'
+                        }`}>
+                          {visitor.status || 'Pending'}
+                        </span>
+                      </td>
+                      <td className="py-3 px-6">
+                        {formattedTime}
+                      </td>
+                      <td className="py-3 px-6">
+                        {formattedOutTime}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -71,3 +93,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

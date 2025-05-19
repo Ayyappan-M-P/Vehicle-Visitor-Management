@@ -4,7 +4,9 @@ import HomePage from './components/HomePage';
 import SignUpPage from './components/SignUpPage';
 import LoginPage from './components/LoginPage';
 import AdminDashboard from './components/AdminPage';
-import NavBar from './components/NavBar';
+import NavBar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import Visitorlogin from './components/Oldvisitor';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 const ProtectedRoute = ({ children }) => {
@@ -23,6 +25,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path='/visitorlogin' element={<Visitorlogin />} />
+              <Route path='/dashboard' element={<Dashboard />} />
               <Route 
                 path="/admin" 
                 element={

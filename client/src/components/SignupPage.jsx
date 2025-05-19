@@ -8,14 +8,17 @@ const SignUpPage = () => {
     username: '',
     idNumber: '',
     idType: 'aadhar', 
-    vehicleType: '',
+    vehicleType: 'car',
     vehicleNumber: '',
     inTime: '',
     duration: '',
     dateOfVisit: '',
+    emailid:'',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const today = new Date().toISOString().split('T')[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,6 +74,7 @@ const SignUpPage = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              
             >
               <option value="aadhar">Aadhar Card</option>
               <option value="pan">PAN Card</option>
@@ -86,19 +90,27 @@ const SignUpPage = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              minLength={12}
+              maxLength={12}
+              pattern="\d{12}"
             />
           </div>
           
           <div>
             <label className="block text-gray-700 mb-2">Vehicle Type</label>
-            <input
+            <select
               type="text"
               name="vehicleType"
               value={formData.vehicleType}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            />
+            >
+              <option value="car">Car</option>
+              <option value="bike">Bike</option>
+              <option value="truck">Truck</option>
+              <option value="heavy Vehicle">heavy Vehicle</option>
+              </select>
           </div>
           
           <div>
@@ -147,6 +159,7 @@ const SignUpPage = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              min={today}
             />
           </div>
         </div>
@@ -166,3 +179,5 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
+
+
