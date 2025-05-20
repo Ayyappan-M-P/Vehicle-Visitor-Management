@@ -11,7 +11,7 @@ const VisitorDashboard = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [mailStatus, setMailStatus] = useState('');
-  const [saveEmailStatus, setSaveEmailStatus] = useState('');
+  //const [saveEmailStatus, setSaveEmailStatus] = useState('');
 
   useEffect(() => {
     const fetchVisitorDetails = async () => {
@@ -25,7 +25,7 @@ const VisitorDashboard = () => {
           setError('No visitor data found. Please Login again.');
           setLoading(false);
         }
-      } catch (error) {
+      } catch {
         setError('Failed to load visitor details.');
         setLoading(false);
       }
@@ -51,26 +51,26 @@ const VisitorDashboard = () => {
     }
   };
 
-  // Save email to visitor record
-  const handleSaveEmail = async (e) => {
-    e.preventDefault();
-    setSaveEmailStatus('');
-    if (!email) {
-      setSaveEmailStatus('Please enter a valid email address.');
-      return;
-    }
-    try {
-      const res = await axios.put(`http://localhost:5000/api/visitors/${visitor.id}/email`, { email });
-      if (res.data && res.data.success) {
-        setSaveEmailStatus('Email saved successfully!');
-        setVisitor({ ...visitor, email });
-      } else {
-        setSaveEmailStatus('Failed to save email. Please try again.');
-      }
-    } catch (err) {
-      setSaveEmailStatus('Failed to save email. Please try again.');
-    }
-  };
+  // // Save email to visitor record
+  // const handleSaveEmail = async (e) => {
+  //   e.preventDefault();
+  //   setSaveEmailStatus('');
+  //   if (!email) {
+  //     setSaveEmailStatus('Please enter a valid email address.');
+  //     return;
+  //   }
+  //   try {
+  //     const res = await axios.put(`http://localhost:5000/api/visitors/${visitor.id}/email`, { email });
+  //     if (res.data && res.data.success) {
+  //       setSaveEmailStatus('Email saved successfully!');
+  //       setVisitor({ ...visitor, email });
+  //     } else {
+  //       setSaveEmailStatus('Failed to save email. Please try again.');
+  //     }
+  //   } catch (err) {
+  //     setSaveEmailStatus('Failed to save email. Please try again.');
+  //   }
+  // };
 
   const handleSendMail = async (e) => {
     e.preventDefault();
@@ -87,7 +87,7 @@ const VisitorDashboard = () => {
       } else {
         setMailStatus('Failed to send PDF. Please try again.');
       }
-    } catch (err) {
+    } catch {
       setMailStatus('Failed to send PDF. Please try again.');
     }
   };
